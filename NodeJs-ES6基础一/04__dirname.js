@@ -1,0 +1,1 @@
+console.log(__dirname);  //输出当前文件路径

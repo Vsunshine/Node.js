@@ -1,0 +1,1 @@
+console.log(__filename);  //输出当前文件一直到文件名；
