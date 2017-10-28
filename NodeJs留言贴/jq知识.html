@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jq</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="child">
+            <p>jjjjjjjj</p>
+        </div>
+    </div>
+    <p>kkkkkkkk</p>
+    <script src="./jquery-1.7.2.min.js"></script>
+    <script>
+
+
+        // 通过$ 或 jQuery 可以获得一个jQuery对象；
+        // jQuery对象中包含了原生DOM 和 操作DOM 的方法；
+        // 如何获得一个jQuery对象 
+        //   1. 为 $ 函数 传一个选择器；
+        //   2. 为 $ 函数 传一个原生DOM；
+        //   1. var box = document.querySelector('.box');
+        //       $(box).html('测试');
+        //   2. $('.box').on('click',function (){
+                    // 原生DOM
+        //          console.log(this);
+
+        //          jQuery对象 
+        //          $(this)          
+        //      })
+
+
+        //  $ 函数 其实有两个参数
+        //  $('p', '.box').css('color', 'red');   //这句话的意思是，将.box盒子下的p元素变成红色；
+
+        
+        // end()    不知道该怎么描述，所以直接看例子把
+        // $('.box').css('color', 'red')
+        // 第一个end()，将返回的this指向child；第二个end(),将返回的this指向box，最后设置的是box的样式
+        $('.box').find('.child').find('p').css('color','blue').end().end().css('backgroundColor','red');   
+    </script>
+</body>
+</html>
