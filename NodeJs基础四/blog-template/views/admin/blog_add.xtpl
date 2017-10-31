@@ -1,6 +1,4 @@
-{{extend ('./layout')}} 
-
-{{#block ('body')}}
+{{extend ('./layout')}} {{#block ('body')}}
 <!-- 写文章 -->
 <div class="body blog">
     <!-- 面包屑 -->
@@ -15,32 +13,30 @@
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">标题</label>
                 <div class="col-xs-6">
-                    <input type="text" class="form-control input-sm">
+                    <input type="text" name="title" class="form-control input-sm">
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">摘要</label>
                 <div class="col-xs-6 ckeditor">
-                    <textarea name="" rows="5" class="form-control input-sm"></textarea>
+                    <textarea name="brief" rows="5" class="form-control input-sm"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">内容</label>
                 <div class="col-xs-6">
-                    <textarea id="ckeditor" class="form-control input-sm"></textarea>
+                    <textarea name="content" id="ckeditor" class="form-control input-sm"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-xs-9">
-                    <a href="./course_add_step2.html" class="btn btn-success btn-sm pull-right">保 存</a>
+                    <input type="submit" value="保 存" class="btn btn-success btn-sm pull-right">
                 </div>
             </div>
         </form>
     </div>
 </div>
-{{/block}} 
-
-{{#block ('script')}}
+{{/block}} {{#block ('script')}}
 <script>
     CKEDITOR.replace('ckeditor', {
         toolbarGroups: [{
@@ -66,5 +62,25 @@
             }
         ]
     });
+
+
+    $('form').on({
+        'submit': function () {
+            var formData = $(this).serialize();
+            console.log(formData);
+            $.ajax({
+                url: '/admin/blog_add',
+                type: 'post',
+                data: formData,
+                success: function (info) {
+                    console.log(info);
+                    if (info.code === 10000) {
+                        // location.href = '/admin/blog_list';
+                    }
+                }
+            })
+            return false;
+        }
+    })
 </script>
 {{/block}}
