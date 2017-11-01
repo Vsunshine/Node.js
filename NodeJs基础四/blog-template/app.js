@@ -25,7 +25,7 @@ app.use('/admin', (req, res, next) => {
     if (!req.session.loginfo && req.url != '/login') {
         //重定向  ，
         // return 的作用是   http要求再请求头设置前不允许有响应主体
-        // return res.redirect('/login');
+        return res.redirect('/login');
     }
 
     next();

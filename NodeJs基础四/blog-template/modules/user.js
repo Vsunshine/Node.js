@@ -31,3 +31,26 @@ exports.auth = (email,pass,cb) => {
         cb({msg:'账号或密码错误'});
     })
 }
+
+//查询某个用户信息
+exports.find = function (id,cb){
+    let sql = 'select * from users where id=?'
+
+    db.query(sql,id,(err,rows)=>{
+        if(err){
+            return cb(err);
+        }
+        cb(null,rows);
+    })
+}
+
+//更新信息
+exports.update = function (id,data,cb){
+    let sql = 'update users set ? where id=?';
+    db.query(sql,[data, id],(err)=>{
+        if (err) {
+            return cb(err);
+        }
+        cb(null);
+    })
+}

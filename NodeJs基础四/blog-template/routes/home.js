@@ -50,11 +50,14 @@ home.post('/login', (req, res) => {
     user.auth(req.body.email, req.body.pass, (err, row) => {
         //登录成功，设置一个session
         req.session.loginfo = row;
-
         if (!err) {
             res.json({
                 code: 10000,
-                mesg: '登录成功'
+                mesg: '登录成功',
+            })
+        }else{
+            res.json({
+                mesg:'账号或密码错误'
             })
         }
     })

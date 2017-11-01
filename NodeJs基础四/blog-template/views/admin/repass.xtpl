@@ -1,6 +1,4 @@
-{{extend ('./layout')}} 
-
-{{#block ('body')}}
+{{extend ('./layout')}} {{#block ('body')}}
 <!-- 修改密码 -->
 <div class="body">
     <div class="repass">
@@ -8,19 +6,19 @@
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">原密码</label>
                 <div class="col-xs-4">
-                    <input type="text" class="form-control input-sm">
+                    <input type="text" class="form-control input-sm" name='pass'>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">新密码</label>
                 <div class="col-xs-4">
-                    <input type="password" class="form-control input-sm">
+                    <input type="password" class="form-control input-sm new1" value="">
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">确认密码</label>
                 <div class="col-xs-4">
-                    <input type="text" class="form-control input-sm">
+                    <input type="password" class="form-control input-sm new2" name='newpass' value=''>
                 </div>
             </div>
             <div class="form-group">
@@ -31,4 +29,30 @@
         </form>
     </div>
 </div>
+{{/block}} 
+
+{{#block ('script')}}
+<script>
+    $('form').on({
+        'submit': function () {
+            var new1 = $('.new1').val();
+            var new2 = $('.new2').val();
+            if (new1 != new2) {
+                return alert('两次密码不一致');
+            }
+            var formData = $(this).serialize();
+            $.ajax({
+                url:'/admin/mima',
+                type:'post',
+                data:formData,
+                success:function(info){
+                    alert(info);
+                    location.href = '/login';
+                }
+            })
+
+            return false;
+        }
+    })
+</script>
 {{/block}}

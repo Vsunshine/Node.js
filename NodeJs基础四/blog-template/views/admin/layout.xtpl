@@ -16,9 +16,9 @@
         <div class="profile">
             <!-- 头像 -->
             <div class="avatar img-circle">
-                <img src="/admin/images/default.png">
+                <img src="/admin/{{avatar}}" class="im">
             </div>
-            <h4>老布头儿</h4>
+            <h4 class="nam">{{name}}</h4>
         </div>
         <!-- 导航菜单 -->
         <div class="navs">
@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="javascript:;" class="quit">
                                 <i class="fa fa-sign-out"></i>
                                 退出
                             </a>
@@ -93,6 +93,35 @@
     <script src="./assets/ckeditor/ckeditor.js"></script>
     <script src="/admin/assets/echarts/echarts.min.js"></script>
     <script src="/admin/libs/common.js"></script>
+    <script>
+        //始终显示头像和用户名
+        $(document).on({
+            'ready':function(){
+                $.ajax({
+                    url:'/admin/tu',
+                    type:'get',
+                    success:function(info){
+                        $('.im').attr('src',info.avatar);
+                        $('.nam').html(info.name);
+                    }
+                })
+            }
+        })
+        //退出操作
+        $('.quit').on({
+            'click':function (){
+                $.ajax({
+                    url:'/admin/quit',
+                    type:'get',
+                    success:function(info){
+                        if(info == 10000){
+                            location.href = '/login';
+                        }
+                    }
+                })
+            }
+        })
+    </script>
     {{{block ('script')}}}
 </body>
 </html>

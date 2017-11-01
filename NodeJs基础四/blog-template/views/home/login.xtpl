@@ -45,7 +45,9 @@
                         if(info.code === 10000){
                             location.href = '/admin';
                         }else{
-                            return alert('请输入正确的账号或密码');
+                            alert(info.mesg);
+                            $('input[type="text"]').val('');
+                            $('input[type="password"]').val('');
                         }
                     }
                 })
