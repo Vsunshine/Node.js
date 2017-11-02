@@ -35,6 +35,7 @@
 /*博客*/
 .body .main {
     margin-right: 340px;
+    position: relative;
 }
 
 .body .main .post {
@@ -107,6 +108,10 @@
     color: #AAA;
     font-size: 14px;
     overflow: hidden;
+    position: absolute;
+    width: 80%;
+    bottom: -35%;
+    left: 0;
 }
 
 .body .pagination a {

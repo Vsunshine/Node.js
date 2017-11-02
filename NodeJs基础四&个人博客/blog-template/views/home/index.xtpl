@@ -1,0 +1,35 @@
+{{extend ('./layout')}} 
+{{#block ('main')}}
+ {{#each (posts)}}
+    <!-- 博客文章 -->
+    <article class="post">
+        <!-- 标题 -->
+        <header class="post-title">
+            <a href="/article?id={{this.id}}">{{this.title}}</a>
+        </header>   
+        <!-- 博客信息 -->
+        <div class="post-meta">
+            <img src="/admin/{{this.avatar}}" alt="">
+            <a href="javascript:;">{{this.name}}</a>
+            <span>{{this.time}}</span>
+        </div>
+        <!-- 博客概览 -->
+        <div class="post-brief">
+            <p>{{this.brief}}</p>
+        </div>
+        <!-- 查看全文 -->
+        <a href="/article?id={{this.id}}" class="read-more">查看全文</a>
+    </article>
+{{/each}}
+
+<!-- 分页 -->
+<div class="pagination">
+    {{#if (dqy > 1)}}
+    <a href="/?dqy={{dqy-1}}" class="prev">← Newer Posts</a>
+    {{/if}}
+    <span>Pages {{dqy}} of {{zys}}</span>
+    {{#if (dqy-0 < zys)}} 
+    <a href="/?dqy={{dqy-0 + 1}}" class="next">Older Posts →</a>
+    {{/if}}
+</div>
+{{/block}}

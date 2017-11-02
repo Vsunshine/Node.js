@@ -9,8 +9,9 @@
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">头像</label>
                 <div class="col-xs-2 preview">
-                    <img src="/admin/{{user.avatar}}">
+                    <img src="{{user.avatar}}" id="filimg">
                     <input type="file" id="upfile">
+                    <input type="hidden" name="avatar" value="" id="hidd">
                     <div class="cover">
                         <i class="fa fa-upload"></i>
                     </div>
@@ -54,7 +55,7 @@
             <div class="form-group">
                 <label for="" class="col-xs-3 control-label">个性签名</label>
                 <div class="col-xs-5 ckeditor">
-                    <textarea name="" rows="5" class="form-control input-sm" name="alt">{{user.alt}}</textarea>
+                    <textarea rows="5" class="form-control input-sm" name="alt">{{user.alt}}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -70,6 +71,24 @@
 
 {{#block ('script')}}
     <script>
+
+        //最后解决
+        var upfile = document.querySelector('#upfile');
+        var hidd = document.querySelector('#hidd');
+        upfile.addEventListener('change',function (){
+            console.dir(upfile);
+            var file = upfile.files[0];
+            var filereader = new FileReader();
+            var filimg = document.querySelector('#filimg');
+            filereader.readAsDataURL(file);
+            filereader.onload = function (e){
+                console.log(filereader.result);
+                filimg.src = filereader.result;
+                hidd.value = filereader.result;
+            }
+        })
+
+
         $('form').on({
             'submit':function(){
                 var formData = $(this).serialize();

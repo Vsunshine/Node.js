@@ -91,6 +91,7 @@ admin.get('/settings', (req, res) => {
     var id = req.session.loginfo.id;
     user.find(id, (err, rows) => {
         if (!err) {
+            console.log(rows);
             res.render('./admin/settings', {
                 user: rows[0]
             })
@@ -101,13 +102,15 @@ admin.get('/settings', (req, res) => {
 //个人中心修改
 admin.post('/update', (req, res) => {
     var id = req.session.loginfo.id;
-    console.log(req.body);
     user.update(id, req.body, (err) => {
         if (!err) {
-            console.log(1);
             res.json({
                 code: 10000,
                 msg: '更新成功'
+            })
+        }else{
+            res.json({
+                msg: '更新失败'
             })
         }
     })
@@ -128,9 +131,10 @@ admin.post('/blog_add', (req, res) => {
         })
 
     } else {
-        // console.log(req.body);
+        console.log(req.body);
         let tim = new Date();
         //添加时间与id；
+        delete req.body.id;
         req.body.uid = req.session.loginfo.id;
         req.body.time = tim;
         post.insert(req.body, (err) => {

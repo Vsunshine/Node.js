@@ -2,11 +2,35 @@ let express = require('express');
 
 let user = require('../modules/user');
 
+let post = require('../modules/post');
+
 let home = express.Router();
 
 home.get('/', (req, res) => {
-    // res.send('这是前台的get');
-    res.render('./home/index', {});
+    //每页条数
+    let myts = 2
+    //当前页
+    let dqy = req.query.dqy || 1;
+    post.cunt((err,row)=>{
+        if(err)  return;
+        
+        //总条数
+        let zts = row[0].total;
+        //总页数
+        let zys = Math.ceil(zts/myts);
+        
+        post.findAll(myts, dqy, (err,rows)=>{
+            console.log(rows);
+            if(!err){
+                res.render('./home/index',{
+                    posts:rows,
+                    zys:zys,
+                    dqy:dqy
+                })
+            }
+        })
+    })
+    
 })
 
 home.get('/about', (req, res) => {
@@ -14,7 +38,13 @@ home.get('/about', (req, res) => {
 })
 
 home.get('/article', (req, res) => {
-    res.render('./home/article', {});
+    post.xiugai(req.query.id, (err,row)=>{
+        console.log(req.query.id);
+        if(!err){                         
+            res.render('./home/article',{post:row[0]})
+        }
+    })
+    // res.render('./home/article', {});
 })
 
 home.get('/center', (req, res) => {
@@ -34,7 +64,7 @@ home.get('/register', (req, res) => {
 })
 
 home.post('/register', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     //将数据加入数据库
     user.insert(req.body, (err) => {
         if (!err) {
