@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        // 1. node的优点：a: I/O密集型处理的是node的强项，因为node的I/O请求是异步的
+        //               b: 异步I/O,异步的发送I/O请求
+        //                  node.js的I/O操作，底层是开启了多线程的
+        //                  当同时有多个IO请求时，主线程会创建多个eio线程，以提高IO请求的处理速度
+
+        // 异步，发送IO操作请求后，你可以去做别的事，IO返回后会自动做下一步的，
+        // 而且你可以同时发起多个IO然后一起汇总。
+        // 所以只用单线程就可以了，每一步的操作可以用整体更少的资源满足要求。
+
+        // 第一步：定义变量
+        let a = 1;
+
+        // 第二步：发出指令，然后把回调函数加入异步队列（回调函数并没有执行）
+        setTimeout(() => {
+            console.log(a);
+        }, 0)
+        // 第三步：赋值，回调函数没有执行
+        a = 2;
+        // 第四步：发出指令，然后把回调函数加入异步队列（回调函数并没有执行）
+        setTimeout(() => {
+            console.log(a);
+        }, 0)
+        // 第五步：赋值，回调函数没有执行
+        a = 3;
+        // 当所有代码执行完毕，cpu空闲下来了，就会开始执行异步队列里面的回调函数
+        // 所以最后控制台输出：3 3
+    </script>
+</body>
+
+</html>
