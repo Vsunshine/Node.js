@@ -1,0 +1,5 @@
+1. 按照正常的程序进行 npm install  ... 安装;
+
+2. 安装完，npm init (-y) 初始化 package.json,里面有安装过的程序的索引
+
+3. 将node_modules删除后，用npm install 可以重新安装package.json里初始化过的程序
